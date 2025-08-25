@@ -1,0 +1,69 @@
+6. Show supplier number and quantity for the part(s) with the highest weight.
+
+SELECT sp.sno, sp.qty
+FROM sp
+JOIN p ON sp.pno = p.pno
+WHERE p.weight = (SELECT MAX(weight) FROM p);
+
+
+sno	qty	
+S01	100	
+S03	120	
+
+
+7. Show supplier name and quantity for parts with color “Red”.
+
+SELECT s.sname, sp.qty
+FROM s
+JOIN sp ON s.sno = sp.sno
+JOIN p ON sp.pno = p.pno
+WHERE p.color = 'Red';
+
+
+Narendra Traders	180	
+
+
+8. Display supplier name, part city, and quantity where the supplier’s status is less than 30 (from the shipments).
+
+SELECT s.sname, p.p_city, sp.qty
+FROM s
+JOIN sp ON s.sno = sp.sno
+JOIN p ON sp.pno = p.pno
+WHERE s.s_status < 30;
+
+
+sname	p_city	qty	
+Narendra Traders	Delhi	100	
+Narendra Traders	Mumbai	180	
+Fast Delivery Co.	Delhi	120	
+Elite Materials 	London	80	
+
+9.Display total quantity supplied by each supplier.
+
+SELECT s.sname, SUM(sp.qty) AS Total_Qty
+FROM s
+JOIN sp ON s.sno = sp.sno
+GROUP BY s.sname;
+
+
+sname		    Total_Qty	
+Elite Materials		80	
+Fast Delivery Co.	120	
+Global Supplies		220	
+Narendra Traders	280	
+
+10.Display total quantity supplied for each part.
+
+
+SELECT p.pname, SUM(sp.qty) AS Total_Qty
+FROM p
+JOIN sp ON p.pno = sp.pno
+GROUP BY p.pname;
+
+
+pname	Total_Qty	
+Bolt	220	
+Clip	80	
+Nut	180	
+Washer	220	
+

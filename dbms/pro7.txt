@@ -1,0 +1,46 @@
+7) 1. Display the employee name, employee department name, boss name, and boss department name.
+=>
+SELECT 
+    SELECT
+  e.Emp_name AS Employee_Name,
+  d1.Dept_name AS Employee_Dept,
+  b.Emp_name AS Boss_Name,
+  d2.Dept_name AS Boss_Dept
+FROM Emp AS e
+JOIN Dept AS d1 ON e.Emp_Dept_Id = d1.Dept_Id
+LEFT JOIN Emp AS b ON e.Emp_boss_id = b.Emp_Id
+LEFT JOIN Dept AS d2 ON b.Emp_Dept_Id = d2.Dept_Id;
+
+=>
+
+
+Emp_Id	Emp_name	Emp_Dept_Id	Emp_boss_id	Emp_salary
+------ ----------	-----------	-----------	----------	
+101	Anil		1		NULL		80000	
+102	Vijay		1		101		40000	
+103	Rita		1		101		85000	
+201	Suman		2		NULL		70000	
+202	Ajay		2		201		50000	
+203	Seema		2		201		52000	
+301	Kiran		3		NULL		75000	
+302	Raj		3		301		55000	
+303	Nina		3		301		53000	
+
+2. Display the same information as above (employee name, department name, boss name, boss department name)
+but only for employees whose salary is greater than their boss’s salary
+=>
+SELECT 
+    e.Emp_name AS Employee_Name,
+    d1.Dept_name AS Employee_Dept,
+    b.Emp_name AS Boss_Name,
+    d2.Dept_name AS Boss_Dept
+FROM Emp e
+JOIN Dept d1 ON e.Emp_Dept_Id = d1.Dept_Id
+JOIN Emp b ON e.Emp_boss_id = b.Emp_Id
+JOIN Dept d2 ON b.Emp_Dept_Id = d2.Dept_Id
+WHERE e.Emp_salary > b.Emp_salary;
+
+=>
+
+Rita	IT	Anil	IT	
+

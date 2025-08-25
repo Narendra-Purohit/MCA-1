@@ -1,0 +1,43 @@
+11.Show total quantity supplied for each part name.
+
+SELECT p.pname, SUM(sp.qty) AS total_qty
+FROM p
+JOIN sp ON p.pno = sp.pno
+GROUP BY p.pname;
+
+
+pname	total_qty	
+-----  ----------
+Bolt	270	
+Nut	180	
+Washer	200	
+	
+
+12.For each supplier whose supplier number is less than 's4', show total quantity supplied by that supplier.
+
+SELECT s.sno, s.sname, SUM(sp.qty) AS total_qty
+FROM s
+JOIN sp ON s.sno = sp.sno
+WHERE s.sno < 'S04'
+GROUP BY s.sno, s.sname;
+
+
+sno	sname	total_qty
+---	-----	---------
+S01	Narendra Traders	330	
+S02	Global Supplies	 	200	
+S03	Fast Delivery Co.	120	
+
+
+13.For each supplier with a supplier status of 20, show the total quantity supplied by them.
+
+SELECT s.sno, s.sname, SUM(sp.qty) AS total_qty
+FROM s
+JOIN sp ON s.sno = sp.sno
+WHERE s.s_status = 20
+GROUP BY s.sno, s.sname;
+
+
+sname	sno			total_qty
+----- ----- 			---------
+S01	Narendra Traders	330

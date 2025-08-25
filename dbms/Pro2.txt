@@ -1,0 +1,97 @@
+2. Write Creat statement for creating following tables in sql.
+
+s(
+sno char(3)pk
+sname varchar(50)
+s_status int
+s_city varchar(25) )
+)
+
+p(
+pno char(3) pk
+pname varchar(20)
+color varchar(10)
+weight float (5.2)
+p_city varchar(25) )
+sp(
+sno char (3)
+pno char (3)
+qty  int 
+sno & pno combination is pk )
+
+After creating above table s insert minimum 5 supplier table s records. also insert also minimum 5 parts table p records.
+then corresponding shipment table sp records also insert as per requirement. after that use Update statement for changing value 
+in record also one delete statement for deleting one record in s table and one record from p table.
+
+==>
+-- Supplier Table
+CREATE TABLE s (
+    sno CHAR(3) PRIMARY KEY,
+    sname VARCHAR(50) NOT NULL,
+    s_status INT NOT NULL DEFAULT 0,
+    s_city VARCHAR(25) NOT NULL
+);
+
+-- Parts Table
+CREATE TABLE p (
+    pno CHAR(3) PRIMARY KEY,
+    pname VARCHAR(20) NOT NULL,
+    color VARCHAR(10) NOT NULL,
+    weight FLOAT(5, 2) NOT NULL DEFAULT 0.00,
+    p_city VARCHAR(25) NOT NULL
+);
+
+-- Shipment Table
+CREATE TABLE sp (
+    sno CHAR(3) NOT NULL,
+    pno CHAR(3) NOT NULL,
+    qty INT NOT NULL DEFAULT 0,
+    PRIMARY KEY (sno, pno),
+    FOREIGN KEY (sno) REFERENCES s(sno) ON DELETE CASCADE,
+    FOREIGN KEY (pno) REFERENCES p(pno) ON DELETE CASCADE
+);
+
+INSERT INTO s (sno, sname, s_status, s_city) VALUES
+('S01', 'Narendra Traders', 20, 'Ahmedabad'),
+('S02', 'Global Supplies', 30, 'Mumbai'),
+('S03', 'Fast Delivery Co.', 15, 'Surat'),
+('S04', 'Elite Materials', 25, 'Rajkot'),
+('S05', 'Speedy Source', 18, 'Baroda');
+
+INSERT INTO p (pno, pname, color, weight, p_city) VALUES
+('P01', 'Bolt', 'Silver', 12.50, 'Delhi'),
+('P02', 'Nut', 'Black', 5.00, 'Mumbai'),
+('P03', 'Washer', 'Gray', 3.75, 'Ahmedabad'),
+('P04', 'Screw', 'Gold', 2.50, 'Jaipur'),
+('P05', 'Clip', 'Blue', 1.20, 'Pune');
+
+INSERT INTO sp (sno, pno, qty) VALUES
+('S01', 'P01', 100),
+('S01', 'P02', 150),
+('S02', 'P03', 200),
+('S03', 'P01', 120),
+('S04', 'P05', 80),
+('S05', 'P04', 90);
+
+-- Update supplier city
+UPDATE s
+SET s_city = 'Gandhinagar'
+WHERE sno = 'S03';
+
+-- Update part weight
+UPDATE p
+SET weight = 6.50
+WHERE pno = 'P02';
+
+-- Update shipment quantity
+UPDATE sp
+SET qty = 180
+WHERE sno = 'S01' AND pno = 'P02';
+
+-- Delete one supplier
+DELETE FROM s
+WHERE sno = 'S05';   -- Deletes supplier S05 and its related shipments in sp
+
+-- Delete one part
+DELETE FROM p
+WHERE pno = 'P04';   -- Deletes part P04 and its related shipments in sp

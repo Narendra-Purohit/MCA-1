@@ -1,0 +1,90 @@
+3.Creating Related Tables with Self-Join and Performing Advanced Queries
+ Problem Definition:
+
+You are required to create the following two related tables in SQL:
+
+1. Employee Table (Emp)
+Column Name Data Type Description
+Emp_Id INT Employee ID – Primary Key
+Emp_name VARCHAR(35) Employee name
+Emp_Dept_Id INT Department ID – Foreign Key referencing Dept_Id
+Emp_boss_id INT ID of the employee’s boss (self-referencing key)
+Emp_salary LONG Salary of the employee
+Note: Emp_boss_id is a reference to another employee’s Emp_Id, representing the employee’s boss.
+
+ 2. Department Table (Dept)
+Column Name Data Type Description
+Dept_Id INT Department ID – Primary Key
+Dept_name VARCHAR(30) Name of the department
+Dept_location VARCHAR(50) Location of the department
+
+Tasks to Perform:
+1. Create the Dept and Emp tables with the appropriate keys:
+ - Use a foreign key from Emp_Dept_Id to Dept_Id.
+ - Use a self-referencing key for Emp_boss_id to link employees to their boss.
+
+2. Insert a minimum of:
+- 3 department records in the Dept table.
+- 3 employee records per department (total at least 9 records) in the Emp table.
+3. At least one employee whose salary is greater than their boss.
+
+==>
+1.Create Department Table (Dept)
+
+CREATE TABLE Dept (
+    Dept_Id INT PRIMARY KEY,
+    Dept_name VARCHAR(30),
+    Dept_location VARCHAR(50)
+);
+
+2.Create Employee Table (Emp)
+
+CREATE TABLE Emp (
+    Emp_Id INT PRIMARY KEY,
+    Emp_name VARCHAR(35),
+    Emp_Dept_Id INT,
+    Emp_boss_id INT,
+    Emp_salary BIGINT,
+
+    FOREIGN KEY (Emp_Dept_Id) REFERENCES Dept(Dept_Id),
+    FOREIGN KEY (Emp_boss_id) REFERENCES Emp(Emp_Id) -- Self-referencing key
+);
+
+1.Insert Data into Dept Table (At least 3 departments)
+
+INSERT INTO Dept (Dept_Id, Dept_name, Dept_location) VALUES (1, 'IT', 'Ahmedabad');
+INSERT INTO Dept (Dept_Id, Dept_name, Dept_location) VALUES (2, 'HR', 'Surat');
+INSERT INTO Dept (Dept_Id, Dept_name, Dept_location) VALUES (3, 'Finance', 'Delhi');
+
+2. Insert Employees
+
+-- IT Department Employees
+INSERT INTO Emp (Emp_Id, Emp_name, Emp_Dept_Id, Emp_boss_id, Emp_salary) VALUES
+(101, 'Anil', 1, NULL, 80000),   -- Dept Head (no boss)
+(102, 'Vijay', 1, 101, 40000),
+(103, 'Rita', 1, 101, 85000);    -- Rita earns more than boss Anil (for special condition)
+
+-- HR Department Employees
+INSERT INTO Emp (Emp_Id, Emp_name, Emp_Dept_Id, Emp_boss_id, Emp_salary) VALUES
+(201, 'Suman', 2, NULL, 70000),  -- Dept Head
+(202, 'Ajay', 2, 201, 50000),
+(203, 'Seema', 2, 201, 52000);
+
+-- Finance Department Employees
+INSERT INTO Emp (Emp_Id, Emp_name, Emp_Dept_Id, Emp_boss_id, Emp_salary) VALUES
+(301, 'Kiran', 3, NULL, 75000),  -- Dept Head
+(302, 'Raj', 3, 301, 55000),
+(303, 'Nina', 3, 301, 53000);
+
+> Advanced Query: Employees earning more than their boss
+
+SELECT e.Emp_Id, e.Emp_name, e.Emp_salary, b.Emp_name AS Boss_Name, b.Emp_salary AS Boss_Salary
+FROM Emp e
+JOIN Emp b ON e.Emp_boss_id = b.Emp_Id
+WHERE e.Emp_salary > b.Emp_salary;
+
+
+
+
+
+
