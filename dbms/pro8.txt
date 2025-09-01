@@ -1,0 +1,30 @@
+8) 3.Show each department’s name and the maximum salary in that department.
+   
+  
+SELECT d.dept_name, 
+       MAX(e.emp_salary) AS max_salary
+FROM dept d
+JOIN emp e ON d.dept_id = e.emp_dept_id
+GROUP BY d.dept_name;
+
+
+dept_name	max_salary
+---------	----------	
+Finance		75000	
+HR		70000	
+IT		85000	
+
+ 4. Display each department name and the total number of employees working in that department.
+ 
+SELECT d.dept_name, 
+       COUNT(e.emp_id) AS total_employees
+FROM dept d
+LEFT JOIN emp e ON d.dept_id = e.emp_dept_id
+GROUP BY d.dept_name;
+
+
+dept_name	total_employees	
+---------	---------------
+Finance		3	
+HR		3	
+IT		3	
