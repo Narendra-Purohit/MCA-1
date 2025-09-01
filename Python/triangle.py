@@ -8,7 +8,7 @@ if rows.isdigit():
         for j in range(i + 1):
             row.append(num)
             num = num * (i - j) // (j + 1)
-        print(row)
+        print(" ".join([str(x) for x in row]))
 else:
     print("Please enter a valid number only.")
 
