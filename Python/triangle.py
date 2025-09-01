@@ -6,6 +6,8 @@ if rows.isdigit():
         num = 1
         row = []
         for j in range(i + 1):
+            if num <= 0:
+                continue
             row.append(num)
             num = num * (i - j) // (j + 1)
         print(" ".join([str(x) for x in row]))
