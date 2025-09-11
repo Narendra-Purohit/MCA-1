@@ -1,3 +1,10 @@
+/* 8.Create a class named Stack with the following specifications:
+•Constructors:
+>Define constructors to initialize the stack (e.g., default constructor, constructor to specify the stack's size).
+•Methods:
+1.public void push(int value) Adds an integer value to the stack.
+2.public int pop() Removes and returns the top value from the stack.
+3.public void traverse() Traverses and prints all the elements in the stack.*/
 
 public class Stack {
     private int[] stackarray;
@@ -62,3 +69,4 @@ public class Stack {
     }
     
 } 
+
