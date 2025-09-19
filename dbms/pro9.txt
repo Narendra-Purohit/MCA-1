@@ -1,0 +1,74 @@
+9) Creating a Trigger to Maintain Total Amount in a Summary Table
+Problem Definition:
+You are required to create a trigger on the account table to automatically maintain the total sum of all inserted amounts.
+Table Structure:
+account
+Fields:
+- acc_no (Integer)
+- amount (Decimal – up to 10 digits, with 2 decimal places)
+account_summary
+Fields:
+- total_amount (Decimal) – to store the running total of all inserted amounts
+Tasks to Perform:
+Create the account table.
+Create a new table called account_summary to store the total amount of all inserted records.
+Insert an initial value (e.g., 0.00) into the account_summary table.
+Create a trigger on the account table that:
+Executes after each INSERT operation.
+Automatically adds the newly inserted amount to the value in account_summary.total_amount.
+Insert at least 10 records into the account table and observe how the total amount updates automatically.
+Learning Objectives:
+Understand how to use AFTER INSERT triggers in SQL.
+Learn how to automate business logic using database-level programming.
+Practice maintaining summary or calculated data using triggers.
+
+==>
+
+CREATE TABLE account (
+    acc_no INT,
+    amount DECIMAL(10, 2)
+);
+
+==DATA==
+
+acc_no		amount	
+1020304011	5000.00	
+1020304012	10000.00	
+1020304013	15000.00	
+1020304014	20000.00	
+1020304016	30000.00	
+1020304017	35000.00	
+1020304018	40000.00	
+1020304020	50000.00	
+1020304021	55000.00
+1020304022	60000.00	
+1020304023	65000.00
+
+
+==> create account_summary Table
+
+CREATE TABLE account_summary (
+total_amount DECIMAL(15,2)
+);
+
+
+==INSERT DATA==
+
+INSERT INTO account_summary (total_amount) VALUES (0.00);
+
+==> Create a trigger 
+
+DELIMITER $$
+
+CREATE TRIGGER update_total_amount
+AFTER INSERT ON account
+FOR EACH ROW
+BEGIN
+   UPDATE account_summary
+   SET total_amount = total_amount + NEW.amount;
+END $$
+
+DELIMITER ;
+
+
+	
