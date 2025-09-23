@@ -1,0 +1,71 @@
+10. Creating a Trigger to Separate and Maintain Credit and Debit Totals
+ Problem Definition:
+ You are required to create a trigger on the account table that maintains separate credit and debit totals depending on whether the inserted amount is positive or 
+negative.
+ Table Structures:
+ Table: account
+ Fields:- acc_no (Integer)- amount (Decimal – up to 10 digits, with 2 decimal places)
+ Table: account_summary
+ Fields:- total_credit (Decimal) – Sum of all positive (credit) amounts- total_debit (Decimal) – Sum of all negative (debit) amounts
+ Tasks to Perform:
+ Create the account table.
+ Create a new table called account_summary with two fields:
+ total_credit (to store the total of all positive amounts)
+ total_debit (to store the total of all negative amounts)
+ Insert initial values (e.g., 0.00) into both fields of account_summary.
+ Create a trigger on the account table that:
+ Executes after each INSERT operation.
+ Checks if the inserted amount is positive or negative.
+ If positive, adds it to total_credit.
+ If negative, adds its absolute value to total_debit.
+ Insert at least 10 records into the account table with a mix of positive and negative values.
+ Observe how the credit and debit totals are maintained automatically.
+
+==>
+
+CREATE TABLE account (
+    acc_no INT,
+    amount DECIMAL(10, 2)
+);
+
+==>
+
+INSERT INTO account (acc_no, amount)
+VALUES 
+    (1, 500.00),
+    (2, -200.00),
+    (3, 1000.00),
+    (5, -400.00);
+
+==>
+CREATE TABLE account_summary1 (
+ total_credit decimal (15,2) DEFAULT 0,
+  total_debit Decimal (15,2) DEFAULT 0
+);
+
+
+==INSERT DATA==
+
+INSERT INTO account_summary1 (total_credit,total_debit) VALUES (0.00);
+
+==> Create a trigger 
+
+DELIMITER $$
+
+CREATE TRIGGER trg_account_insert
+AFTER INSERT ON account
+FOR EACH ROW
+BEGIN
+    IF NEW.amount > 0 THEN
+        UPDATE account_summary1
+        SET total_credit = total_credit + NEW.amount;
+    ELSE
+        UPDATE account_summary1
+        SET total_debit = total_debit + ABS(NEW.amount);
+    END IF;
+END$$
+
+DELIMITER ;
+
+
+
