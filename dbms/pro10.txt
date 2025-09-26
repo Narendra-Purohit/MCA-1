@@ -38,7 +38,8 @@ VALUES
  
 ==>
 
-CREATE TABLE account_summary1( acc_no int PRIMARY key, 
+CREATE TABLE account_summary1( 
+acc_no int PRIMARY key, 
 total_credit decimal (15,2) DEFAULT 0.00, 
 total_debit decimal (15,2) DEFAULT 0.00, 
 total_amount decimal (15,2) DEFAULT 0.00
@@ -72,6 +73,7 @@ BEGIN
 END;
 $$
 DELIMITER ;
+
 
 
 
