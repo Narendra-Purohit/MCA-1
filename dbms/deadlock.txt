@@ -1,0 +1,16 @@
+user 1
+MySQL -u root
+use mca 
+
+START TRANSACTON;
+UPADATE account SET AccNo=2 WHERE AccNO=3
+commit; 
+rollback;
+
+user 2
+MySQL -u root
+use mca 
+
+START TRANSACTON;
+UPADATE account SET AccNo=2 WHERE AccNO=3
+
